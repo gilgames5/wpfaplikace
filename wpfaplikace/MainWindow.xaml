@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
@@ -50,39 +51,41 @@
         </DataGrid>
 
 
+
+       ​
         <StackPanel Grid.Column="1" Margin="10">
             <Label Content="Categories"/>
-            <ListBox x:Name="listBoxCategories" ItemsSource="{Binding Categories}" DisplayMemberPath="name"  SelectionChanged="listBoxCategories_SelectionChanged">
-                
-            </ListBox>
-
+            <ListBox x:Name="listBoxCategories" ItemsSource="{Binding Categories}" DisplayMemberPath="name" SelectionChanged="listBoxCategories_SelectionChanged"/>
             <Label Content="Graph"/>
-            <!-- You would replace the following placeholder with your chart control from a third-party library -->
-            <Border Background="Gray" Height="200">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">Chart Placeholder</TextBlock>
-            </Border>
+            <lvc:PieChart x:Name="budgetChart" Series="{Binding ChartSeries}">
+                <!-- PieChart specific configurations -->
+            </lvc:PieChart>
 
             <!-- Toggle buttons for different chart types -->
             <ToggleButton Content="Bar Chart" IsChecked="True"/>
             <ToggleButton Content="Pie Chart"/>
+            <TextBlock Name="budget_viz"></TextBlock>
         </StackPanel>
         
         <Popup Name="categories_popup" Placement="Center" Margin="10">
             <Border Width="600" Height="400" Padding="1">
-                <DataGrid x:Name="spreadsheetcategories" 
-                      ItemsSource="{Binding Data}"
-                      CanUserAddRows="True"
-                      CanUserDeleteRows="True"
-                      AutoGenerateColumns="False"
-                      SelectionUnit="CellOrRowHeader"
-                      SelectionMode="Extended">
-                    <DataGrid.Columns>
-                        <!-- Define your columns here, for example -->
-                        <DataGridTextColumn Header="name" Binding="{Binding name}" Width="*"/>
-                        <DataGridTextColumn Header="budget" Binding="{Binding budget}" Width="*"/>
-                        <!-- Add as many columns as you need -->
-                    </DataGrid.Columns>
-                </DataGrid>
+                <StackPanel>
+                    <DataGrid x:Name="spreadsheetcategories" 
+                          ItemsSource="{Binding Categories}"
+                          CanUserAddRows="True"
+                          CanUserDeleteRows="True"
+                          AutoGenerateColumns="False"
+                          SelectionUnit="CellOrRowHeader"
+                          SelectionMode="Extended">
+                        <DataGrid.Columns>
+                            <!-- Define your columns here, for example -->
+                            <DataGridTextColumn Header="name" Binding="{Binding name}" Width="*"/>
+                            <DataGridTextColumn Header="budget" Binding="{Binding budget}" Width="*"/>
+                            <!-- Add as many columns as you need -->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Add Row" Click="AddCategory_click"/>
+                </StackPanel>
             </Border>
         </Popup>
     </Grid>
