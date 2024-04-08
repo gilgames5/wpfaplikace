@@ -50,14 +50,12 @@
             </DataGrid.Columns>
         </DataGrid>
 
-
-
-       ​
         <StackPanel Grid.Column="1" Margin="10">
             <Label Content="Categories"/>
             <ListBox x:Name="listBoxCategories" ItemsSource="{Binding Categories}" DisplayMemberPath="name" SelectionChanged="listBoxCategories_SelectionChanged"/>
             <Label Content="Graph"/>
-            <lvc:PieChart x:Name="budgetChart" Series="{Binding ChartSeries}">
+            <lvc:PieChart x:Name="budgetChart" Series="{Binding ChartSeries}" Width="150" Height="150">
+                
                 <!-- PieChart specific configurations -->
             </lvc:PieChart>
 
